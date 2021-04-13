@@ -1,11 +1,19 @@
 {
   "name": "wapblog",
   "version": "1.0.0",
-  "description": "",
+  "description": "My expreiment using next.js",
   "main": "index.js",
   "keywords": [],
-  "author": "",
+  "author": "Aris Riswanto",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arisris/wapblog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arisris/wapblog/issues"
+  },
+  "homepage": "https://github.com/arisris/wapblog#readme",
   "scripts": {
     "start": "next start",
     "dev": "next dev",
