@@ -2,11 +2,20 @@ import { useState } from "react";
 import Link from "next/link";
 import Head from "next/head";
 import cn from "classnames";
+import { MenuIcon, XIcon, HomeIcon } from "@heroicons/react/solid";
 
 export default function Layout({ children, withHero }) {
   const [toggled, toggle] = useState(false);
+  let heroTitle, heroSubtitle;
+  if (typeof withHero !== "object") {
+    withHero = false;
+  } else {
+    heroTitle = withHero.title || "No Title";
+    heroSubtitle = withHero.subtitle || "No Subtitle";
+    withHero = true;
+  }
   return (
-    <section className="sans-serif absolute flex flex-column w-100 h-100">
+    <section className="font-sans absolute flex flex-col w-full h-full">
       <Head>
         <meta
           name="viewport"
@@ -14,59 +23,51 @@ export default function Layout({ children, withHero }) {
         />
         <title>No Title</title>
       </Head>
-      <header className="db bg-purple white shadow-1">
-        <nav className="flex flex-column flex-row-ns justify-between mw8-ns ml-auto mr-auto">
-          <div className="flex justify-between items-center white bg-purple">
+      <header className="block bg-purple-800 text-white shadow-sm">
+        <nav className="flex flex-col sm:flex-row justify-between sm:max-w-screen-lg m-auto">
+          <div className="flex justify-between items-center bg-purple-800">
             <Link href="/">
-              <a className="db pa2 no-underline b white hover-bg-black-10">
-                Home
+              <a className="flex flex-row p-2 font-bold text-white hover:bg-purple-900">
+                <HomeIcon className="w-6 h-6 mr-1" /> <span>Home</span>
               </a>
             </Link>
             <div
-              className="db dn-ns pa2 no-underline b white hover-bg-black-10"
-              style={{ userSelect: "none" }}
+              className="block sm:hidden p-2 font-bold hover:bg-purple-900 select-none"
               onClick={() => toggle(!toggled)}
               role="button"
             >
-              Menu
+              {toggled ? (
+                <XIcon className="2-6 h-6" />
+              ) : (
+                <MenuIcon className="w-6 h-6" />
+              )}
             </div>
           </div>
           <div
             className={cn(
               {
-                "flex-ns": toggled,
-                dn: !toggled
+                "sm:flex": toggled,
+                hidden: !toggled,
               },
-              "flex-ns flex-column flex-row-ns bt bw0-ns b--black-10"
+              "sm:flex flex-col sm:flex-row border-t border-purple-900"
             )}
           >
-            <Link href="/posts">
-              <a className="db pa2 no-underline white hover-bg-black-10">
-                Blog
-              </a>
-            </Link>
             <Link href="/projects">
-              <a className="db pa2 no-underline white hover-bg-black-10">
-                My Project
-              </a>
+              <a className="block p-2 hover:bg-purple-900">My Projects</a>
             </Link>
             <Link href="/about-me">
-              <a className="db pa2 no-underline white hover-bg-black-10">
-                About Me
-              </a>
+              <a className="block p-2 hover:bg-purple-900">About Me</a>
             </Link>
             <Link href="/contact">
-              <a className="db pa2 no-underline white hover-bg-black-10">
-                Contact
-              </a>
+              <a className="block p-2 hover:bg-purple-900">Contact</a>
             </Link>
           </div>
         </nav>
         {withHero ? (
-          <div className="flex items-center justify-center ph2 pv4 pv5-ns bt b--black-10 bg-black-10">
-            <div className="flex flex-column items-center">
-              <h1 className="ma0 pa0 tracked">Hello World</h1>
-              <p className="ma0 pa0 i tracked-mega">This is subtitle</p>
+          <div className="flex items-center justify-center px-2 py-4 sm:py-5 border-t border-purple-900 sm:border-0">
+            <div className="flex flex-col items-center">
+              <h1 className="text-4xl">{heroTitle}</h1>
+              <p className="text-md">{heroSubtitle}</p>
             </div>
           </div>
         ) : (
@@ -74,13 +75,31 @@ export default function Layout({ children, withHero }) {
         )}
       </header>
       <main className="flex-auto">
-        <div className="mw8-ns pa2 mr-auto ml-auto">{children}</div>
+        <div className="sm:max-w-screen-lg p-2 m-auto">{children}</div>
       </main>
-      <footer className="flex justify-center bg-black-05 pa2 mt4">
-        <div className="i f6">
+      <footer className="text-center p-2 mt-4">
+        <div className="italic text-md">
+          <div className="ml-1">
+            Made With{" "}
+            <a
+              href="https://nextjs.org"
+              target="__blank"
+              className="text-purple-900"
+            >
+              Next
+            </a>{" "}
+            &amp;{" "}
+            <a
+              href="https://tailwindcss.com"
+              target="__blank"
+              className="text-purple-900"
+            >
+              Tailwind
+            </a>
+          </div>
           <span>&copy; {new Date().getFullYear()}</span>
           <Link href="/">
-            <a className="ml1 purple">Aris Riswanto</a>
+            <a className="ml-1 text-purple-900">Aris Riswanto</a>
           </Link>
         </div>
       </footer>
