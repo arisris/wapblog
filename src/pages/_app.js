@@ -1,9 +1,12 @@
 import { SWRConfig } from "swr";
 import { StoreContext } from "storeon/react";
 import store from "../store";
-import "../css/index.css";
+
+import "tailwindcss/tailwind.css";
+import "tailwindcss/screens.css";
+
 const fetcher = function (resource, init) {
-  return fetch(resource, init).then(data => data.json());
+  return fetch(resource, init).then((data) => data.json());
 };
 
 function PageApp({ Component, pageProps }) {
